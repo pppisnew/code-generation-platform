@@ -1,0 +1,644 @@
+{
+  "groups": [
+    {
+      "name": "langchain4j.open-ai",
+      "type": "dev.langchain4j.openai.spring.Properties",
+      "sourceType": "dev.langchain4j.openai.spring.Properties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model",
+      "type": "dev.langchain4j.openai.spring.ChatModelProperties",
+      "sourceType": "dev.langchain4j.openai.spring.Properties",
+      "sourceMethod": "chatModel()"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model",
+      "type": "dev.langchain4j.openai.spring.EmbeddingModelProperties",
+      "sourceType": "dev.langchain4j.openai.spring.Properties",
+      "sourceMethod": "embeddingModel()"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model",
+      "type": "dev.langchain4j.openai.spring.ImageModelProperties",
+      "sourceType": "dev.langchain4j.openai.spring.Properties",
+      "sourceMethod": "imageModel()"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model",
+      "type": "dev.langchain4j.openai.spring.LanguageModelProperties",
+      "sourceType": "dev.langchain4j.openai.spring.Properties",
+      "sourceMethod": "languageModel()"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model",
+      "type": "dev.langchain4j.openai.spring.ModerationModelProperties",
+      "sourceType": "dev.langchain4j.openai.spring.Properties",
+      "sourceMethod": "moderationModel()"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model",
+      "type": "dev.langchain4j.openai.spring.ChatModelProperties",
+      "sourceType": "dev.langchain4j.openai.spring.Properties",
+      "sourceMethod": "streamingChatModel()"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model",
+      "type": "dev.langchain4j.openai.spring.LanguageModelProperties",
+      "sourceType": "dev.langchain4j.openai.spring.Properties",
+      "sourceMethod": "streamingLanguageModel()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "langchain4j.open-ai.chat-model.api-key",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.frequency-penalty",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.logit-bias",
+      "type": "java.util.Map<java.lang.String,java.lang.Integer>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.max-completion-tokens",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.max-tokens",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.metadata",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.organization-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.parallel-tool-calls",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.presence-penalty",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.project-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.reasoning-effort",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.response-format",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.seed",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.service-tier",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.stop",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.store",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.strict-json-schema",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.strict-tools",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.supported-capabilities",
+      "type": "java.util.Set<dev.langchain4j.model.chat.Capability>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.top-p",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.chat-model.user",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.api-key",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.dimensions",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.max-segments-per-batch",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.organization-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.project-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.embedding-model.user",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.api-key",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.organization-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.project-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.quality",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.response-format",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.size",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.style",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.image-model.user",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ImageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.api-key",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.organization-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.project-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.language-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.api-key",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.organization-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.project-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.moderation-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.openai.spring.ModerationModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.api-key",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.frequency-penalty",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.logit-bias",
+      "type": "java.util.Map<java.lang.String,java.lang.Integer>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.max-completion-tokens",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.max-tokens",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.metadata",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.organization-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.parallel-tool-calls",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.presence-penalty",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.project-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.reasoning-effort",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.response-format",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.seed",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.service-tier",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.stop",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.store",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.strict-json-schema",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.strict-tools",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.supported-capabilities",
+      "type": "java.util.Set<dev.langchain4j.model.chat.Capability>",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.top-p",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-chat-model.user",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.api-key",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.organization-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.project-id",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.open-ai.streaming-language-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.openai.spring.LanguageModelProperties"
+    }
+  ],
+  "hints": []
+}

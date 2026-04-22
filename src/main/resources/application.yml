@@ -3,17 +3,16 @@ spring:
     active: local
   application:
     name: peng-code-generation-platform
-  # mysql
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/peng_code_generation_platform
-    username: root
-    password: Mysql88@
+  mvc:
+    async:
+      request-timeout: 300000
 
 server:
   port: 8123
   servlet:
     context-path: /api
+  tomcat:
+    connection-timeout: 300000
 
 # springdoc-openapi
 springdoc:

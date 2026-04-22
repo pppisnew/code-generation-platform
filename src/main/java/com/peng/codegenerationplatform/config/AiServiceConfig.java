@@ -1,27 +1,21 @@
-package com.peng.codegenerationplatform.ai;
+package com.peng.codegenerationplatform.config;
 
+import com.peng.codegenerationplatform.ai.AiCodeGeneratorService;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.service.AiServices;
-import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AiCodeGeneratorServiceFactory {
-
-    @Resource
-    private ChatModel chatModel;
-
-    @Resource
-    private StreamingChatModel streamingChatModel;
+public class AiServiceConfig {
 
     @Bean
-    public AiCodeGeneratorService aiCodeGeneratorService() {
+    public AiCodeGeneratorService aiCodeGeneratorService(ChatModel chatModel,
+                                                          StreamingChatModel streamingChatModel) {
         return AiServices.builder(AiCodeGeneratorService.class)
                 .chatModel(chatModel)
                 .streamingChatModel(streamingChatModel)
                 .build();
     }
 }
-
