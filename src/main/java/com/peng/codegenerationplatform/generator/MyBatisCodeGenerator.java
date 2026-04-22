@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Dict;
 import cn.hutool.setting.yaml.YamlUtil;
 import com.mybatisflex.codegen.Generator;
 import com.mybatisflex.codegen.config.GlobalConfig;
+import com.peng.codegenerationplatform.config.EnvConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.util.Map;
@@ -11,20 +12,33 @@ import java.util.Map;
 public class MyBatisCodeGenerator {
 
     // 需要生成的表名
-    private static final String[] TABLE_NAMES = {"app"};
+    private static final String[] TABLE_NAMES = {"chat_history"};
 
     public static void main(String[] args) {
-        // 获取数据源信息
-        Dict dict = YamlUtil.loadByPath("application.yml");
-        Map<String, Object> dataSourceConfig = dict.getByPath("spring.datasource");
-        String url = String.valueOf(dataSourceConfig.get("url"));
-        String username = String.valueOf(dataSourceConfig.get("username"));
-        String password = String.valueOf(dataSourceConfig.get("password"));
+        // 从环境变量获取数据源信息
+        // 在 main 方法中使用
+        String url = EnvConfig.get("DB_URL");
+        String username = EnvConfig.get("DB_USERNAME");
+        String password = EnvConfig.get("DB_PASSWORD");
+
+        System.out.println("=== 环境变量检查 ===");
+        System.out.println("DB_URL: " + url);
+        System.out.println("DB_USERNAME: " + username);
+        System.out.println("DB_PASSWORD: " + (password != null ? "***" : null));
+        System.out.println("==================");
+
+        if (url == null || username == null || password == null) {
+            throw new IllegalStateException(
+                    "数据库配置缺失！请设置环境变量：DB_URL, DB_USERNAME, DB_PASSWORD\n"
+            );
+        }
+
         // 配置数据源
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
+
 
         // 创建配置内容
         GlobalConfig globalConfig = createGlobalConfig();
