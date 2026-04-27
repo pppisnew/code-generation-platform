@@ -18,12 +18,16 @@ import com.peng.codegenerationplatform.model.dto.app.AppAddRequest;
 import com.peng.codegenerationplatform.model.dto.app.AppEditRequest;
 import com.peng.codegenerationplatform.model.dto.app.AppQueryRequest;
 import com.peng.codegenerationplatform.model.entity.App;
+import com.peng.codegenerationplatform.model.entity.ChatHistory;
 import com.peng.codegenerationplatform.model.entity.User;
 import com.peng.codegenerationplatform.model.enums.CodeGenTypeEnum;
+import com.peng.codegenerationplatform.model.enums.MessageTypeEnum;
 import com.peng.codegenerationplatform.model.vo.AppVO;
 import com.peng.codegenerationplatform.model.vo.UserVO;
 import com.peng.codegenerationplatform.service.AppService;
+import com.peng.codegenerationplatform.service.ChatHistoryService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -38,11 +42,15 @@ import java.util.stream.Collectors;
  *
  * @author peng
  */
+@Slf4j
 @Service
 public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppService {
 
     @Resource
     private AiCodeGeneratorFacade aiCodeGeneratorFacade;
+
+    @Resource
+    private ChatHistoryService chatHistoryService;
 
     private static final int DEPLOY_KEY_MAX_RETRY = 3;
     private static final int DEPLOY_KEY_LENGTH = 6;
@@ -122,6 +130,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
         if (!oldApp.getUserId().equals(userId)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
+        chatHistoryService.deleteByAppId(id);
         boolean result = this.removeById(id);
         if (!result) {
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "删除失败");
@@ -229,8 +238,38 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
         if (codeGenTypeEnum == null) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "不支持的代码生成类型");
         }
-        // 5. 调用 AI 生成代码
-        return aiCodeGeneratorFacade.generateAndSaveCodeStream(message, codeGenTypeEnum, appId);
+        // 5. 保存用户消息
+        ChatHistory userMsg = new ChatHistory();
+        userMsg.setMessage(message);
+        userMsg.setMessageType(MessageTypeEnum.USER.getValue());
+        userMsg.setAppId(appId);
+        userMsg.setUserId(loginUser.getId());
+        chatHistoryService.save(userMsg);
+        // 6. 调用 AI 生成代码（流式），并保存 AI 回复或错误消息
+        StringBuilder aiResponse = new StringBuilder();
+        return aiCodeGeneratorFacade.generateAndSaveCodeStream(message, codeGenTypeEnum, appId)
+                .doOnNext(aiResponse::append)
+                .doOnComplete(() -> {
+                    ChatHistory aiMsg = new ChatHistory();
+                    aiMsg.setMessage(aiResponse.toString());
+                    aiMsg.setMessageType(MessageTypeEnum.AI.getValue());
+                    aiMsg.setAppId(appId);
+                    aiMsg.setUserId(loginUser.getId());
+                    chatHistoryService.save(aiMsg);
+                })
+                .doOnError(e -> {
+                    log.error("AI 流式生成失败", e);
+                    try {
+                        ChatHistory errorMsg = new ChatHistory();
+                        errorMsg.setMessage("AI 回复失败: " + (e.getMessage() != null ? e.getMessage() : "未知错误"));
+                        errorMsg.setMessageType(MessageTypeEnum.ERROR.getValue());
+                        errorMsg.setAppId(appId);
+                        errorMsg.setUserId(loginUser.getId());
+                        chatHistoryService.save(errorMsg);
+                    } catch (Exception saveEx) {
+                        log.error("保存 AI 错误消息失败", saveEx);
+                    }
+                });
     }
 
     @Override

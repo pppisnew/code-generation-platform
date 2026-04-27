@@ -1,528 +1,578 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简单任务记录工具</title>
-    <style>
-        /* 全局样式重置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        /* 容器样式 */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-        }
-        
-        /* 头部样式 */
-        header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        /* 主内容区域 */
-        main {
-            padding: 30px;
-        }
-        
-        /* 添加任务表单 */
-        .add-task-form {
-            display: flex;
-            margin-bottom: 30px;
-            gap: 10px;
-        }
-        
-        #taskInput {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #e1e5eb;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        #taskInput:focus {
-            outline: none;
-            border-color: #2575fc;
-        }
-        
-        .add-btn {
-            background-color: #2575fc;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .add-btn:hover {
-            background-color: #1a68e8;
-        }
-        
-        /* 任务列表区域 */
-        .tasks-section h2 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #2c3e50;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .task-filters {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .filter-btn {
-            padding: 8px 16px;
-            background-color: #f0f0f0;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .filter-btn.active {
-            background-color: #2575fc;
-            color: white;
-        }
-        
-        .filter-btn:hover:not(.active) {
-            background-color: #e0e0e0;
-        }
-        
-        /* 任务列表 */
-        #taskList {
-            list-style-type: none;
-        }
-        
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 18px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            transition: all 0.3s;
-            border-left: 4px solid #2575fc;
-        }
-        
-        .task-item:hover {
-            background-color: #f0f7ff;
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-        }
-        
-        .task-item.completed {
-            opacity: 0.7;
-            border-left-color: #4CAF50;
-        }
-        
-        .task-checkbox {
-            width: 22px;
-            height: 22px;
-            margin-right: 15px;
-            cursor: pointer;
-        }
-        
-        .task-text {
-            flex: 1;
-            font-size: 1.1rem;
-        }
-        
-        .task-item.completed .task-text {
-            text-decoration: line-through;
-            color: #777;
-        }
-        
-        .delete-btn {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 8px 15px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .delete-btn:hover {
-            background-color: #ff5252;
-        }
-        
-        /* 空状态提示 */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #777;
-        }
-        
-        .empty-state.hidden {
-            display: none;
-        }
-        
-        /* 统计信息 */
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        /* 页脚 */
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #777;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .container {
-                border-radius: 8px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .add-task-form {
-                flex-direction: column;
-            }
-            
-            .add-btn {
-                padding: 15px;
-            }
-            
-            .task-filters {
-                flex-wrap: wrap;
-            }
-            
-            .stats {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            main {
-                padding: 20px;
-            }
-            
-            .task-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            
-            .task-actions {
-                display: flex;
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .task-checkbox {
-                margin-right: 0;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>简单任务记录工具</title>
+  <style>
+    /* ----- 全局重置 & 主题变量 ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    /* ----- 卡片容器 ----- */
+    .app-card {
+      max-width: 680px;
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 20px 40px -8px rgba(0, 20, 40, 0.15);
+      padding: 2rem 2rem 2.5rem;
+      transition: box-shadow 0.2s ease;
+    }
+
+    /* ----- 标题区 ----- */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .app-header h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #1a2639;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .app-header h1 span {
+      background: #eef2f6;
+      padding: 0.2rem 0.7rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #2c3e50;
+    }
+
+    .progress-badge {
+      background: #e9edf2;
+      padding: 0.5rem 1rem;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #1e2b3c;
+      white-space: nowrap;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+    }
+
+    .progress-badge strong {
+      font-weight: 700;
+      color: #1f6e43;
+    }
+
+    /* ----- 输入区域 (表单) ----- */
+    .task-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .task-form input {
+      flex: 1 1 200px;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid #dce2ea;
+      border-radius: 80px;
+      font-size: 1rem;
+      background: #fafcfe;
+      transition: all 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .task-form input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    .task-form button {
+      background: #1f2c3f;
+      color: white;
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 80px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 20, 30, 0.1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .task-form button:hover {
+      background: #2b3c55;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(26, 45, 70, 0.15);
+    }
+
+    .task-form button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* ----- 空状态 & 任务列表 ----- */
+    .task-list-container {
+      min-height: 200px;
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #6f7d91;
+      background: #f9fbfd;
+      border-radius: 36px;
+      font-size: 1rem;
+      border: 1px dashed #d0d9e5;
+    }
+
+    .empty-message p:first-child {
+      font-size: 2.8rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    /* ----- 单个任务项 (卡片样式) ----- */
+    .task-item {
+      background: #f9fbfd;
+      border-radius: 40px;
+      padding: 0.9rem 1.2rem 0.9rem 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      border: 1px solid #eef2f7;
+      transition: all 0.15s ease;
+    }
+
+    .task-item:hover {
+      border-color: #cdd8e8;
+      background: #fdfdfd;
+    }
+
+    /* 自定义复选框 (状态切换) */
+    .task-check {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #b6c3d6;
+      background: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.15s;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .task-check.completed {
+      background: #1f8b4c;
+      border-color: #1f8b4c;
+    }
+
+    .task-check.completed::after {
+      content: "✓";
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    /* 任务文本 */
+    .task-text {
+      flex: 1 1 0;
+      font-size: 1.05rem;
+      color: #1a2639;
+      word-break: break-word;
+      padding: 0.2rem 0;
+      transition: color 0.2s;
+    }
+
+    .task-text.line-through {
+      text-decoration: line-through;
+      color: #7a8a9e;
+    }
+
+    /* 删除按钮 */
+    .task-delete {
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #8b9aaf;
+      font-size: 1.4rem;
+      transition: all 0.2s;
+      font-weight: 300;
+    }
+
+    .task-delete:hover {
+      background: #f1e6e6;
+      color: #bc3a3a;
+    }
+
+    .task-delete:active {
+      transform: scale(0.9);
+    }
+
+    /* ----- 底部操作栏 (批量清除) ----- */
+    .task-footer {
+      margin-top: 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #eaeef4;
+    }
+
+    .task-footer span {
+      color: #3f5068;
+      font-size: 0.9rem;
+    }
+
+    .clear-btn {
+      background: transparent;
+      border: 1px solid #dbe1ea;
+      padding: 0.45rem 1.3rem;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      color: #485b74;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 500;
+    }
+
+    .clear-btn:hover {
+      background: #edf2f9;
+      border-color: #b9c8dd;
+      color: #1d2c42;
+    }
+
+    .clear-btn:active {
+      background: #dce3ef;
+    }
+
+    /* ----- 响应式调优 ----- */
+    @media (max-width: 500px) {
+      .app-card {
+        padding: 1.5rem 1.2rem;
+      }
+      .app-header h1 {
+        font-size: 1.6rem;
+      }
+      .task-form button {
+        padding: 0.75rem 1.5rem;
+        flex: 1 0 auto;
+      }
+      .task-item {
+        padding: 0.7rem 1rem;
+        gap: 0.5rem;
+        border-radius: 32px;
+      }
+      .task-delete {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    /* 工具类：用于隐藏无任务时的计数占位 (避免歧义) */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>简单任务记录工具</h1>
-            <p class="subtitle">轻松添加、管理和跟踪您的日常任务。所有数据都保存在您的浏览器中。</p>
-        </header>
-        
-        <main>
-            <section class="add-task">
-                <form class="add-task-form" id="taskForm">
-                    <input 
-                        type="text" 
-                        id="taskInput" 
-                        placeholder="输入新任务，例如：完成项目报告" 
-                        autocomplete="off"
-                        required
-                    >
-                    <button type="submit" class="add-btn">添加任务</button>
-                </form>
-            </section>
-            
-            <section class="tasks-section">
-                <h2>我的任务</h2>
-                
-                <div class="task-filters">
-                    <button class="filter-btn active" data-filter="all">全部任务</button>
-                    <button class="filter-btn" data-filter="active">进行中</button>
-                    <button class="filter-btn" data-filter="completed">已完成</button>
-                </div>
-                
-                <div class="empty-state" id="emptyState">
-                    <p>暂无任务。添加您的第一个任务吧！</p>
-                </div>
-                
-                <ul id="taskList">
-                    <!-- 任务将通过JavaScript动态添加 -->
-                </ul>
-                
-                <div class="stats">
-                    <div class="total-tasks">总任务: <span id="totalTasks">0</span></div>
-                    <div class="active-tasks">进行中: <span id="activeTasks">0</span></div>
-                    <div class="completed-tasks">已完成: <span id="completedTasks">0</span></div>
-                </div>
-            </section>
-        </main>
-        
-        <footer>
-            <p>© 2023 简单任务记录工具 | 数据存储在您的本地浏览器中</p>
-        </footer>
+
+<div class="app-card">
+  <!-- 头部：标题 + 进度 -->
+  <header class="app-header">
+    <h1>
+      📋 任务清单
+      <span id="taskCounter">0</span>
+    </h1>
+    <div class="progress-badge">
+      ✅ 已完成 <strong id="completedCounter">0</strong> / <span id="totalCounter">0</span>
+    </div>
+  </header>
+
+  <!-- 添加任务表单 -->
+  <form class="task-form" id="taskForm" aria-label="新增任务">
+    <input type="text" id="taskInput" placeholder="写一个任务，例如「整理笔记」" required autocomplete="off" />
+    <button type="submit" aria-label="添加任务">➕ 添加</button>
+  </form>
+
+  <!-- 任务列表容器 -->
+  <div class="task-list-container" id="taskListContainer">
+    <!-- 空状态占位 (默认显示，JS 会动态管理) -->
+    <div class="empty-message" id="emptyState">
+      <p>📝</p>
+      <p>这里还没有任务，写一个吧</p>
     </div>
 
-    <script>
-        // 任务管理应用
-        document.addEventListener('DOMContentLoaded', function() {
-            // 获取DOM元素
-            const taskForm = document.getElementById('taskForm');
-            const taskInput = document.getElementById('taskInput');
-            const taskList = document.getElementById('taskList');
-            const emptyState = document.getElementById('emptyState');
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            
-            // 统计元素
-            const totalTasksEl = document.getElementById('totalTasks');
-            const activeTasksEl = document.getElementById('activeTasks');
-            const completedTasksEl = document.getElementById('completedTasks');
-            
-            // 当前过滤器
-            let currentFilter = 'all';
-            
-            // 从本地存储加载任务，如果没有则初始化为空数组
-            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            
-            // 初始化应用
-            function initApp() {
-                renderTasks();
-                updateStats();
-                updateEmptyState();
-            }
-            
-            // 渲染任务列表
-            function renderTasks() {
-                // 清空当前列表
-                taskList.innerHTML = '';
-                
-                // 根据当前过滤器筛选任务
-                let filteredTasks = tasks;
-                if (currentFilter === 'active') {
-                    filteredTasks = tasks.filter(task => !task.completed);
-                } else if (currentFilter === 'completed') {
-                    filteredTasks = tasks.filter(task => task.completed);
-                }
-                
-                // 如果筛选后没有任务，显示空状态
-                if (filteredTasks.length === 0) {
-                    emptyState.classList.remove('hidden');
-                } else {
-                    emptyState.classList.add('hidden');
-                    
-                    // 创建任务列表项
-                    filteredTasks.forEach((task, index) => {
-                        const taskItem = document.createElement('li');
-                        taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
-                        taskItem.dataset.id = task.id;
-                        
-                        taskItem.innerHTML = `
-                            <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
-                            <span class="task-text">${escapeHtml(task.text)}</span>
-                            <div class="task-actions">
-                                <button class="delete-btn">删除</button>
-                            </div>
-                        `;
-                        
-                        // 添加事件监听器
-                        const checkbox = taskItem.querySelector('.task-checkbox');
-                        const deleteBtn = taskItem.querySelector('.delete-btn');
-                        
-                        checkbox.addEventListener('change', () => toggleTaskCompletion(task.id));
-                        deleteBtn.addEventListener('click', () => deleteTask(task.id));
-                        
-                        taskList.appendChild(taskItem);
-                    });
-                }
-            }
-            
-            // 添加新任务
-            function addTask(text) {
-                if (!text.trim()) return;
-                
-                const newTask = {
-                    id: Date.now(), // 使用时间戳作为唯一ID
-                    text: text.trim(),
-                    completed: false,
-                    createdAt: new Date().toISOString()
-                };
-                
-                tasks.push(newTask);
-                saveTasks();
-                renderTasks();
-                updateStats();
-                updateEmptyState();
-                
-                // 清空输入框
-                taskInput.value = '';
-                taskInput.focus();
-            }
-            
-            // 切换任务完成状态
-            function toggleTaskCompletion(id) {
-                tasks = tasks.map(task => {
-                    if (task.id === id) {
-                        return { ...task, completed: !task.completed };
-                    }
-                    return task;
-                });
-                
-                saveTasks();
-                renderTasks();
-                updateStats();
-            }
-            
-            // 删除任务
-            function deleteTask(id) {
-                tasks = tasks.filter(task => task.id !== id);
-                saveTasks();
-                renderTasks();
-                updateStats();
-                updateEmptyState();
-            }
-            
-            // 更新任务统计
-            function updateStats() {
-                const total = tasks.length;
-                const completed = tasks.filter(task => task.completed).length;
-                const active = total - completed;
-                
-                totalTasksEl.textContent = total;
-                activeTasksEl.textContent = active;
-                completedTasksEl.textContent = completed;
-            }
-            
-            // 更新空状态显示
-            function updateEmptyState() {
-                const hasTasks = tasks.length > 0;
-                
-                if (hasTasks) {
-                    emptyState.classList.add('hidden');
-                } else {
-                    emptyState.classList.remove('hidden');
-                }
-            }
-            
-            // 保存任务到本地存储
-            function saveTasks() {
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-            }
-            
-            // 简单的HTML转义函数，防止XSS攻击
-            function escapeHtml(text) {
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
-            
-            // 事件监听器
-            
-            // 表单提交事件
-            taskForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                addTask(taskInput.value);
-            });
-            
-            // 过滤器按钮点击事件
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // 移除所有按钮的active类
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // 为当前点击的按钮添加active类
-                    this.classList.add('active');
-                    
-                    // 更新当前过滤器
-                    currentFilter = this.dataset.filter;
-                    
-                    // 重新渲染任务列表
-                    renderTasks();
-                });
-            });
-            
-            // 初始化应用
-            initApp();
-            
-            // 添加一些示例任务（仅当没有任务时）
-            if (tasks.length === 0) {
-                const exampleTasks = [
-                    "阅读一本新书",
-                    "完成项目报告",
-                    "去健身房锻炼",
-                    "学习新的编程技能",
-                    "整理工作空间"
-                ];
-                
-                // 延迟添加示例任务，让用户先看到空状态
-                setTimeout(() => {
-                    exampleTasks.forEach((task, index) => {
-                        setTimeout(() => {
-                            addTask(task);
-                        }, index * 200);
-                    });
-                }, 1000);
-            }
+    <!-- 动态任务列表 <ul> 将会呈现于此 -->
+    <ul class="task-list" id="taskList" aria-label="任务列表"></ul>
+  </div>
+
+  <!-- 底部操作区域 -->
+  <div class="task-footer" id="taskFooter">
+    <span>💡 点击圆圈切换状态</span>
+    <button class="clear-btn" id="clearCompletedBtn" aria-label="清除已完成任务">🧹 清除已完成</button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    "use strict";
+
+    // ---------- DOM 引用 ----------
+    const taskForm = document.getElementById('taskForm');
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+    const emptyState = document.getElementById('emptyState');
+    const taskCounter = document.getElementById('taskCounter');        // 标题角标
+    const completedCounter = document.getElementById('completedCounter');
+    const totalCounter = document.getElementById('totalCounter');
+    const clearCompletedBtn = document.getElementById('clearCompletedBtn');
+
+    // ---------- 状态存储 ----------
+    // 任务对象：{ id: 唯一标识, text: 内容, completed: 布尔 }
+    let tasks = [];
+
+    // ---------- 辅助函数 ----------
+    // 生成简易唯一 id (时间戳 + 随机)
+    function generateId() {
+      return Date.now() + '-' + Math.random().toString(36).substring(2, 8);
+    }
+
+    // 更新 UI：空状态显示/隐藏、任务计数、进度显示
+    function refreshUI() {
+      const total = tasks.length;
+      const completed = tasks.filter(t => t.completed).length;
+
+      // 1. 空状态与列表切换
+      if (total === 0) {
+        emptyState.style.display = 'block';
+        taskList.style.display = 'none';
+      } else {
+        emptyState.style.display = 'none';
+        taskList.style.display = 'flex';   // flex 来自 .task-list
+      }
+
+      // 2. 更新计数
+      taskCounter.textContent = total;
+      totalCounter.textContent = total;
+      completedCounter.textContent = completed;
+
+      // 3. 如果有0个任务，进度显示 0/0 但保持可读 (不做额外处理)
+    }
+
+    // 渲染所有任务 (全量渲染，简洁稳定)
+    function renderTasks() {
+      // 清空列表元素 (保留 <ul> 本身)
+      taskList.innerHTML = '';
+
+      // 遍历 tasks 数组创建 DOM
+      tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        li.dataset.taskId = task.id;
+
+        // 状态切换圆形按钮
+        const checkSpan = document.createElement('span');
+        checkSpan.className = 'task-check' + (task.completed ? ' completed' : '');
+        checkSpan.setAttribute('role', 'checkbox');
+        checkSpan.setAttribute('aria-checked', task.completed);
+        checkSpan.setAttribute('tabindex', '0');
+        checkSpan.setAttribute('aria-label', task.completed ? '标记为未完成' : '标记为已完成');
+
+        // 任务文本
+        const textSpan = document.createElement('span');
+        textSpan.className = 'task-text' + (task.completed ? ' line-through' : '');
+        textSpan.textContent = task.text;
+
+        // 删除按钮
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'task-delete';
+        deleteBtn.setAttribute('aria-label', `删除任务: ${task.text}`);
+        deleteBtn.innerHTML = '✕';  // 乘号
+
+        // 事件绑定 (使用事件委托也可以，但绑定在具体元素更清晰)
+        // 勾选事件
+        checkSpan.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleTaskCompletion(task.id);
         });
-    </script>
+        // 键盘支持 (回车/空格切换)
+        checkSpan.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleTaskCompletion(task.id);
+          }
+        });
+
+        // 删除事件
+        deleteBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          deleteTaskById(task.id);
+        });
+
+        // 组装
+        li.appendChild(checkSpan);
+        li.appendChild(textSpan);
+        li.appendChild(deleteBtn);
+        taskList.appendChild(li);
+      });
+
+      // 刷新计数及空状态
+      refreshUI();
+    }
+
+    // ---------- 核心操作函数 ----------
+    // 切换任务完成状态
+    function toggleTaskCompletion(taskId) {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      task.completed = !task.completed;
+      renderTasks();  // 重新渲染 (数据驱动)
+    }
+
+    // 删除单个任务
+    function deleteTaskById(taskId) {
+      tasks = tasks.filter(t => t.id !== taskId);
+      renderTasks();
+    }
+
+    // 添加新任务
+    function addTask(text) {
+      const trimmed = text.trim();
+      if (trimmed === '') {
+        // 理论上 input required 会阻止，但再次防护
+        return false;
+      }
+
+      const newTask = {
+        id: generateId(),
+        text: trimmed,
+        completed: false
+      };
+      tasks.push(newTask);
+      renderTasks();
+      return true;
+    }
+
+    // 清除所有已完成任务
+    function clearCompleted() {
+      const hasCompleted = tasks.some(t => t.completed);
+      if (!hasCompleted) {
+        // 如果没有已完成任务，轻提示但无反馈 (或可加 alert，但为了体验静默)
+        return;
+      }
+      tasks = tasks.filter(t => !t.completed);
+      renderTasks();
+    }
+
+    // ---------- 事件绑定 ----------
+    // 表单提交: 添加任务
+    taskForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const inputValue = taskInput.value;
+      const success = addTask(inputValue);
+      if (success) {
+        taskInput.value = '';   // 清空输入
+        taskInput.focus();
+      } else {
+        // 极端情况：空字符串 (但 required 已拦截)
+        taskInput.focus();
+      }
+    });
+
+    // 清除已完成按钮
+    clearCompletedBtn.addEventListener('click', function() {
+      clearCompleted();
+    });
+
+    // 可选：点击空白处折叠键盘 (通过监听 document 或容器)
+    document.addEventListener('click', function(e) {
+      // 如果点击的不是输入框或按钮，可收回键盘 (但非必须)
+      // 我们保留默认行为。
+    });
+
+    // ---------- 默认填充示例任务 (让界面不孤单) ----------
+    function initSampleTasks() {
+      // 若本地没有任务，添加一些友好示例
+      if (tasks.length === 0) {
+        const samples = [
+          { text: '阅读设计文章 30 分钟', completed: false },
+          { text: '整理工作台', completed: true },
+          { text: '写一份周报草稿', completed: false },
+          { text: '喝水 & 拉伸', completed: false }
+        ];
+        samples.forEach(s => {
+          tasks.push({
+            id: generateId(),
+            text: s.text,
+            completed: s.completed
+          });
+        });
+      }
+      renderTasks();
+    }
+
+    // ---------- 启动 ----------
+    initSampleTasks();
+
+    // 额外: 响应式无额外动作，交由 CSS
+
+  })();
+</script>
+
 </body>
 </html>
