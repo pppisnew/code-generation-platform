@@ -6,6 +6,7 @@ import com.peng.codegenerationplatform.model.dto.chathistory.ChatHistoryQueryReq
 import com.peng.codegenerationplatform.model.entity.ChatHistory;
 import com.peng.codegenerationplatform.model.vo.ChatHistoryVO;
 import com.peng.codegenerationplatform.model.vo.UserVO;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -61,4 +62,14 @@ public interface ChatHistoryService extends IService<ChatHistory> {
      * @return ChatHistoryVO 列表
      */
     List<ChatHistoryVO> getChatHistoryVOList(List<ChatHistory> list, Map<Long, UserVO> userVOMap);
+
+    /**
+     * 加载对话历史到内存
+     *
+     * @param appId       应用 id
+     * @param chatMemory  聊天内存
+     * @param maxCount    最大数量
+     * @return 加载数量
+     */
+    int loadChatHistoryToMemory(Long appId, MessageWindowChatMemory chatMemory, int maxCount);
 }
